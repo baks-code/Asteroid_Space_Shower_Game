@@ -1,6 +1,7 @@
 package ui;
 
 import util.Buffer;
+
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
@@ -8,13 +9,28 @@ import javafx.scene.layout.StackPane;
 public class GamePane extends StackPane{
 	
 	private GameCanvas canvas; 
-	private AnimationTimer gameTimer; 
+	private AnimationTimer gameTimer;
 	
+	private int[] TopFiveScores = {0,0,0,0,0,0};
+	
+	
+	
+	enum Game_State
+	{
+		Menu,
+		Play
+	}
+	
+	private Game_State state = Game_State.Menu;
 	
 	public GamePane() {
 		super();
 		
 		canvas = new GameCanvas();	
+		
+		
+		canvas.setWidth(800);
+		canvas.setHeight(700);
 		
 	
 		gameTimer = new AnimationTimer() {
@@ -24,7 +40,8 @@ public class GamePane extends StackPane{
 				canvas.requestFocus(); 
 				
 				//game logic here
-				 
+				
+				canvas.setMenuState(TopFiveScores);
 				
 				
 				System.out.println("Up arrow is pressed: " + Buffer.isKeyPressed(KeyCode.UP)); 
