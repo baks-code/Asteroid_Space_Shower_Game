@@ -1,4 +1,7 @@
 package visitordesignpattern;
+
+import javafx.geometry.Point2D;
+
 /**
  * 
  * AbstractVisitor interface
@@ -7,6 +10,5 @@ package visitordesignpattern;
  *
  */
 public interface iRenderVisitor {
-	
-	
+	public void DrawPlayer(Point2D ObjLocation);	
 }

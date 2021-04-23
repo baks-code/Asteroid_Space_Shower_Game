@@ -6,119 +6,221 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import model.EntityContainer;
+import model.GameEntity;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+import java.io.File;
+import java.util.Iterator;
 
 
 public class GameCanvas extends Canvas{
 	
 	RenderGameObjectVisitor visitor = new RenderGameObjectVisitor();
 	
+	//Data
+	EntityContainer<GameEntity> entities = null;
+	
+	
+	
+	//Image_Objects
 	final static Image Space = new Image("file:data/Object_Images/space.jpg");
-	final static Image SpaceShip = new Image("file:data/Object_Images/spaceship.png");
-	private static Integer spaceship_y_location = 700;
+	public final static Image SpaceShip = new Image("file:data/Object_Images/spaceship.png");
+	final static Image Pause = new Image("file:data/Object_Images/pause.png");
+	
+	final static Image Life = new Image("file:data/Object_Images/life.png");
+	
+	
+	//Sounds
+	final static String musicFile = "data/Sounds/Lematsa.mp3";
+	Media sound = new Media(new File(musicFile).toURI().toString());
+	MediaPlayer mediaPlayer = new MediaPlayer(sound);
+	
+	
+	
 	private GraphicsContext graphics = null;
 	
 	public GameCanvas() {
+		entities = new EntityContainer<GameEntity>();
 		setUpEventListeners();		
 	}
 	
 	public void setMenuState(int[] TopFiveScores)
 	{
 		graphics = getGraphicsContext2D();
-		visitor.setGraphicsContext(graphics);
 		
 		//Draw space image		
 		graphics.drawImage(Space, 0, 0, getWidth(),getHeight());
 		
 		
-		 //Play Button
-		graphics.fillRoundRect(325, 600, 140, 50, 20, 20);
+		/* Play Button */
+		
+		graphics.setFill(Color.DODGERBLUE);
+		graphics.fillRoundRect(325, 530, 140, 50, 20, 20);
 		graphics.setFill(Color.rgb(0, 102, 204)); graphics.setEffect(new DropShadow());
 		 
-		graphics.fillText("PLAY",351,638);
 		graphics.setFill(Color.BLACK);
 		graphics.setFont(Font.font("Italics",40));
+		graphics.fillText("PLAY",351,568);
+		graphics.setFill(Color.BLACK);
 		
-		
+		/* End Of Play Button */	
 		
 		 
-		//Score Section
+		/* Score Section */
 		
-		graphics.strokeRoundRect(200, 50, 400, 80, 20, 20);
-		graphics.fillText("Higest Score", 285, 100);
+		graphics.setStroke(Color.LAWNGREEN);
+		graphics.strokeRoundRect(25, 50, 300, 400, 20, 20);
+		graphics.setFill(Color.web("rgb(0%,0%,0%)", 0.5));
+		graphics.fillRoundRect(25, 50, 300, 400, 20, 20);
+		graphics.setFill(Color.CORNFLOWERBLUE);
+		graphics.fillText("Higest Score", 65, 100);		
 		
+		graphics.setFont(Font.font("Italics",20));
+		graphics.setFill(Color.BEIGE);
 		
-		graphics.setFont(Font.font("Italics",30));
-		for(int i = 0; i < 5; i++)
-		{
-			graphics.fillText(String.valueOf(i+1)+ " " + String.valueOf(TopFiveScores[i]), 320, 200 + (i * 50));
-			
+		for(int i = 0; i < 5; i++){
+			graphics.fillText(String.valueOf(i+1), 100, 180 + (i * 50));			
 		}
 		
-		//Instructions
+		graphics.setFont(Font.font("Italics",30));
+		for(int i = 0; i < 5; i++){
+			graphics.fillText(String.valueOf(i+1)+ " " + String.valueOf(TopFiveScores[i]), 120, 180 + (i * 50));			
+		}
 		
-		graphics.strokeRoundRect(100, 450, 600, 80, 20, 20);
+		/* End Of Score Section*/	
+		
+		
+		/* Instructions */
+		
+		graphics.strokeRoundRect(350, 50, 422, 400, 20, 20);
 		graphics.setFont(Font.font("Italics",20));
 		
-		graphics.fillText("Shot as many rocks as\npossible and make sure\nyou dont hit any of them\nbecause you will lose a life\nand eventually lose", 485, 450);
+		graphics.setFill(Color.web("rgb(0%,0%,0%)", 0.5));
+		graphics.fillRoundRect(350, 50, 422, 400, 20, 20);
 		
-		graphics.fillText("Control\nUse S to shot\nUse arrow keys to move around",70, 500);
+		graphics.setFont(Font.font("Italics",40));
+		graphics.setFill(Color.CORNFLOWERBLUE);
+		graphics.fillText("Instruction",465, 100);		
 		
+		graphics.setFont(Font.font("Italics",20));
+		graphics.setFill(Color.BEIGE);
+		graphics.fillText("Shot as many rocks as possible and make \nsure you dont hit any of them because \nyou will lose a life and eventually lose", 380, 150);
 		
-		
-		/*
-		 * graphics.drawImage(SpaceShip, 380, spaceship_y_location, 60,50);
-		 * spaceship_y_location = spaceship_y_location - 10;;
-		 * 
-		 * if(spaceship_y_location == -60) spaceship_y_location=700;
-		 */
-		
-		
+		/* End Of Instructions */	
 		
 		
 		
+		/* Player's Ship */		
 		
-	
-				
-		/*
-		 * graphics.setStroke(Color.BLUE); graphics.setFont(Font.font("Georgia",30));
-		 * //Play graphics.strokeText("PLAY",175,330);
-		 * //GC.setFill(Color.CORNFLOWERBLUE); graphics.fillText("PLAY",175,330);
-		 * 
-		 * //High Score graphics.setFont(Font.font("Georgia",30));
-		 * graphics.strokeText("High Score",550,100);
-		 * graphics.setFont(Font.font("Italic",60));
-		 * graphics.fillText(String.valueOf("5"), 550, 200);
-		 * graphics.setFont(Font.font("Georgia",30)); graphics.setFill(Color.WHITE);
-		 * graphics.fillText("High Score",550,100); graphics.fillRect(545, 105, 160, 2);
-		 * //Instructions graphics.strokeText("Instructions",550,400);
-		 * graphics.fillText("Instructions",550,400); graphics.fillRect(545, 405, 175,
-		 * 2); graphics.setFont(Font.font("Georgia",25)); graphics.
-		 * fillText("Shot as many rocks as\npossible and make sure\nyou dont hit any of them\nbecause you will lose a life\nand eventually lose"
-		 * , 485, 450);
-		 * 
-		 * graphics.fillRect(450, 50, 5, 600);
-		 * 
-		 * //Controls
-		 * graphics.fillText("Control\n\nUse S to shot\nUse arrow keys to move around",
-		 * 70, 500);
-		 */
+			graphics.drawImage(SpaceShip, 380, 600, 60,50);
+		
+		/* End Of Player's Ship */	
+		
+	}
+
+	public void setPlayState()
+	{
+		graphics = getGraphicsContext2D();
+		visitor.setGraphicsContext(graphics);
+		
+		
+		
+		
+		//Draw space image		
+		graphics.drawImage(Space, 0, 0, getWidth(),getHeight());
+		
+		//Make space environment for realistic by making stars seem as if they glowing		
+		graphics.setFill(Color.WHITESMOKE);
+		graphics.fillRect(GenerateRandomPoint(), GenerateRandomPoint(), 2, 2);
+		
+		
+		
+		//Draw Score/Status Section
+		graphics.setFill(Color.web("rgb(0%,0%,0%)", 0.5));
+		graphics.fillRoundRect(100, -20, 600, 60, 30, 30);
+		graphics.setStroke(Color.WHITE);
+		graphics.strokeRoundRect(100, -20, 600, 60, 30, 30);
+		
+		
+		
+		graphics.drawImage(Life, 130, 5, 30,30);
+
+		
+		
+		
+		//Draw pause button		
+		graphics.drawImage(Pause, 5, 5, 30,30);
+		
+		
+		
+		
+		
+		
+		/* Draw all entities on canvas */
+		
+		Iterator<GameEntity> itr = entities.iterator();
+		
+		while(itr.hasNext())
+		{
+			itr.next().accept(visitor);
+		}
+		
+		/* Draw all entities on canvas */
+			
+			
+			
+		
+		//Play music
+		/* mediaPlayer.play(); */
+		
 		
 		
 		
 		
 	}
-	
-	
-	
-	
-	public void redrawCanvas(){
+
+	public void setPauseState() {
+		//Draw space image		
+		graphics.drawImage(Space, 0, 0, getWidth(),getHeight());
+		
+		//Make space environment for realistic by making stars seem as if they glowing		
+		graphics.setFill(Color.WHITESMOKE);
+		graphics.fillRect(GenerateRandomPoint(), GenerateRandomPoint(), 2, 2);
+		
+		/* Paused Menu Section */
+		
+		graphics.setFill(Color.web("rgb(0%,0%,0%)", 0.5));
+		graphics.fillRect(200, 100, 400,400);
 		
 		
+		graphics.setFill(Color.CORNFLOWERBLUE);
+		graphics.setFont(Font.font("Italics",50));
+		graphics.fillText("Play", 330, 200);
+		graphics.fillText("Quit", 330, 300);
 		
+		/* End Of Paused Menu Section */
 		
 	}
+	
+
+	/* Support Functions */
+	
+	private double GenerateRandomPoint() {
+		int Max = 750;
+		int Min = 1;
+		int Range = Max - Min + 1;
+		
+		return (int)(Math.random() * Range) + Min;
+	}
+	
+	/* End Of Support Functions */
+	
+	
+	
 	
 	private void setUpEventListeners() {
 		

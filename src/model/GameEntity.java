@@ -4,21 +4,21 @@ import javafx.geometry.Point2D;
 import visitordesignpattern.iRenderable;
 
 
-public abstract class GameObject implements iRenderable{
+public abstract class GameEntity implements iRenderable{
 	
 	private Point2D location; 
 	
 	
-	public GameObject() {
+	public GameEntity() {
 		location = new Point2D(0, 0);
 	}
 	
 	
-	public GameObject(int x, int y) {
+	public GameEntity(int x, int y) {
 		location = new Point2D(x, y);
 	}
 	
-	public GameObject(Point2D location) {
+	public GameEntity(Point2D location) {
 		this.location = location;
 	}
 	

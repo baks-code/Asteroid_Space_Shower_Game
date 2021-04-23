@@ -1,6 +1,8 @@
 package visitordesignpattern;
 
+import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
+import ui.GameCanvas;
 
 /**
  * ConcreteVisitor class
@@ -21,6 +23,14 @@ public class RenderGameObjectVisitor implements iRenderVisitor{
 	public void setGraphicsContext(GraphicsContext gc) {
 		this.gc = gc;
 	}
+
+	@Override
+	public void DrawPlayer(Point2D ObjLocation) {
+		gc.drawImage(GameCanvas.SpaceShip, ObjLocation.getX(), ObjLocation.getY(), 60,50);
+	}
+	
+	
+	
 	
 	
 
