@@ -14,20 +14,21 @@ public class EntityContainer<T extends GameEntity> implements Iterable<T>{
 		Entities = new ArrayList<>();
 	}
 	
-	public void addGameEntity(T go) {
-		Entities.add(go);
+	public void addGameEntity(T ge) {
+		Entities.add(ge);
 	}
 	
 	public void removeGameEntity(int index) {
 		Entities.remove(index);
 	}
 	
-	public void removeGameEntity(T go) {
-		Entities.remove(go);
+	public void removeGameEntity(T ge) {
+		Entities.remove(ge);
 	}
 	
 	public void clearGameEntity() {
-		Entities.removeAll(null);
+		//Entities.removeAll(null);
+		Entities.clear();
 	}
 	
 	public int getSize() {

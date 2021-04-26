@@ -3,12 +3,16 @@ package ui;
 import util.Buffer;
 
 import java.time.LocalTime;
+import java.util.Iterator;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import model.GameEntity;
 import model.Player;
+import model.Rock;
 
 public class GamePane extends StackPane{
 	
@@ -50,14 +54,19 @@ public class GamePane extends StackPane{
 				if(state.equals(Game_State.Menu)){					
 					canvas.setMenuState(TopFiveScores);
 					
-					//Play button is clicked
-					if(Buffer.isLeftMousePressed() &&
-					   Buffer.getMouseNodeLocation().getX() >= 325 && Buffer.getMouseNodeLocation().getX() <= 465 &&
-					   Buffer.getMouseNodeLocation().getY() >= 530 && Buffer.getMouseNodeLocation().getY() <= 580){
-						//Set game state to play
+					//New Game Option is clicked					
+					
+					if(Buffer.isLeftMousePressed() && Buffer.getMouseNodeLocation().getX() >= 200 && Buffer.getMouseNodeLocation().getX() <= 600 &&
+							   Buffer.getMouseNodeLocation().getY() >= 250 && Buffer.getMouseNodeLocation().getY() <= 300) {
+						
 						state = Game_State.Play;
-						canvas.entities.addGameEntity(new Player());
-					}
+					
+					canvas.entities.addGameEntity(new Player());
+				}
+					
+					
+					
+					
 				}else if(state.equals(Game_State.Play)){
 					canvas.setPlayState();
 					
@@ -81,22 +90,6 @@ public class GamePane extends StackPane{
 					
 					
 					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
-					
 					//Play button is clicked
 					if(Buffer.isLeftMousePressed() &&
 					   Buffer.getMouseNodeLocation().getX() >= 5 && Buffer.getMouseNodeLocation().getX() <= 35 &&
@@ -107,14 +100,17 @@ public class GamePane extends StackPane{
 				}else if(state.equals(Game_State.Pause)){
 					canvas.setPauseState();
 					
+					//New Game Selected
+					if(Buffer.isLeftMousePressed() && Buffer.getMouseNodeLocation().getX() >= 200 && Buffer.getMouseNodeLocation().getX() <= 600 &&
+							   Buffer.getMouseNodeLocation().getY() >= 100 && Buffer.getMouseNodeLocation().getY() <= 180){
+						
+						
+						canvas.entities.clearGameEntity();
+						canvas.entities.addGameEntity(new Player());
+						state = Game_State.Play;
+							}
 					
-					//Play Selected
-					if(Buffer.isLeftMousePressed() &&
-					   Buffer.getMouseNodeLocation().getX() >= 330 && Buffer.getMouseNodeLocation().getX() <= 380 &&
-					   Buffer.getMouseNodeLocation().getY() >= 200 && Buffer.getMouseNodeLocation().getY() <= 250){
-						//Set game state to play
-						state = Game_State.Play;					
-					}
+					if(Buffer.isKeyPressed(KeyCode.ESCAPE)) state = Game_State.Play;
 					
 				}
 				
