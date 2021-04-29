@@ -27,7 +27,6 @@ public class GameCanvas extends Canvas{
 	//Data
 	EntityContainer<GameEntity> entities = null;
 	private int RockChances = 1;
-	private int RockSpeed = 2;
 	
 	
 	

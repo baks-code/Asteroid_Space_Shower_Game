@@ -23,6 +23,8 @@ public class GamePane extends StackPane{
 	
 	//Game variables
 	private Integer PlayerSpeed = 5;
+
+	private int RockSpeed = 2;
 	
 	
 	enum Game_State
@@ -61,42 +63,84 @@ public class GamePane extends StackPane{
 						
 						state = Game_State.Play;
 					
-					canvas.entities.addGameEntity(new Player());
-				}
-					
-					
+						canvas.entities.addGameEntity(new Player());
+					}
 					
 					
 				}else if(state.equals(Game_State.Play)){
 					canvas.setPlayState();
 					
+					Player player = (Player) canvas.entities.getPlayer();
+					
+					
+					/* Player Mobility */
 					
 					if(Buffer.isKeyPressed(KeyCode.UP)){
-						if(canvas.entities.getPlayer().getYLocation() >= 55)
-							canvas.entities.getPlayer().setLocation((int)canvas.entities.getPlayer().getXLocation(), (int)canvas.entities.getPlayer().getYLocation() - PlayerSpeed);
+						if(player.getYLocation() >= 55)
+							player.setLocation((int)player.getXLocation(), (int)player.getYLocation() - PlayerSpeed);
 					}
 					if(Buffer.isKeyPressed(KeyCode.DOWN)){
-						if(canvas.entities.getPlayer().getYLocation() <= canvas.getHeight()-60)
-							canvas.entities.getPlayer().setLocation((int)canvas.entities.getPlayer().getXLocation(), (int)canvas.entities.getPlayer().getYLocation() + PlayerSpeed);
+						if(player.getYLocation() <= canvas.getHeight()-60)
+							player.setLocation((int)player.getXLocation(), (int)player.getYLocation() + PlayerSpeed);
 					}
 					if(Buffer.isKeyPressed(KeyCode.LEFT)){
-						if(canvas.entities.getPlayer().getXLocation() >= 0)
-							canvas.entities.getPlayer().setLocation((int)canvas.entities.getPlayer().getXLocation() - PlayerSpeed, (int)canvas.entities.getPlayer().getYLocation());
+						if(player.getXLocation() >= 0)
+							player.setLocation((int)player.getXLocation() - PlayerSpeed, (int)player.getYLocation());
 					}
 					if(Buffer.isKeyPressed(KeyCode.RIGHT)){
-						if(canvas.entities.getPlayer().getXLocation() <= canvas.getWidth() - 57)
-							canvas.entities.getPlayer().setLocation((int)canvas.entities.getPlayer().getXLocation() + PlayerSpeed, (int)canvas.entities.getPlayer().getYLocation());
+						if(player.getXLocation() <= canvas.getWidth() - 57)
+							player.setLocation((int)player.getXLocation() + PlayerSpeed, (int)player.getYLocation());
+					}					
+					
+					
+					
+					
+					/* End Of Player Mobility */
+					
+			
+					
+					/* Move Game Entities */
+					
+					Iterator<GameEntity> temp_itr = canvas.entities.iterator();
+					while(temp_itr.hasNext()){
+						GameEntity entity = temp_itr.next();
+						
+						//Detect Player collision
+						if(!(entity instanceof Player)) {
+							if(player.DetectFrontEntity(entity)) {
+								canvas.entities.removeGameEntity(entity);
+							}							
+						}
+						
+						if(entity instanceof Rock)
+						{
+							entity.setYLocation((int)entity.getYLocation() + RockSpeed);
+							if(entity.getYLocation() >= canvas.getHeight() - 50)
+							{
+								canvas.entities.removeGameEntity(entity);
+							}
+						}				
 					}
 					
+					/* End Of Move Game Entities */
+					
+										
+				
 					
 					
-					//Play button is clicked
-					if(Buffer.isLeftMousePressed() &&
-					   Buffer.getMouseNodeLocation().getX() >= 5 && Buffer.getMouseNodeLocation().getX() <= 35 &&
-					   Buffer.getMouseNodeLocation().getY() >= 5 && Buffer.getMouseNodeLocation().getY() <= 35){
-						//Set game state to play
-						state = Game_State.Pause;					
-					}
+					
+					/* Check clicks and player action */ 
+						//Play button is clicked
+						if(Buffer.isLeftMousePressed() &&
+						   Buffer.getMouseNodeLocation().getX() >= 5 && Buffer.getMouseNodeLocation().getX() <= 35 &&
+						   Buffer.getMouseNodeLocation().getY() >= 5 && Buffer.getMouseNodeLocation().getY() <= 35){
+							//Set game state to play
+							state = Game_State.Pause;					
+						}
+					
+					/* End Of Check clicks and player action */ 
+					
+					
 				}else if(state.equals(Game_State.Pause)){
 					canvas.setPauseState();
 					
@@ -113,8 +157,6 @@ public class GamePane extends StackPane{
 					if(Buffer.isKeyPressed(KeyCode.ESCAPE)) state = Game_State.Play;
 					
 				}
-				
-				
 				
 				
 				System.out.println("Up arrow is pressed: " + Buffer.isKeyPressed(KeyCode.UP));		 	

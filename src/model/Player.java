@@ -16,14 +16,14 @@ public class Player extends GameEntity {
 	 * Method used for collision detection
 	 * @param obj used to detect if player is in front of it
 	 */
-	public boolean DetectFrontObject(GameEntity obj)
+	public boolean DetectFrontEntity(GameEntity entity)
 	{
 		boolean Object_In_Front = false;
 		
-		if((int)obj.getYLocation() >= (int)getYLocation() - 30 &&
-		   (int)obj.getYLocation() <= (int)getYLocation() + 30 &&
-		   (int)obj.getXLocation() >=  (int)getXLocation() - 30 &&
-		   (int)obj.getXLocation() <=  (int)getXLocation() + 30)
+		if((int)entity.getYLocation() >= (int)getYLocation() - 30 &&
+		   (int)entity.getYLocation() <= (int)getYLocation() + 30 &&
+		   (int)entity.getXLocation() >=  (int)getXLocation() - 30 &&
+		   (int)entity.getXLocation() <=  (int)getXLocation() + 30)
 		{
 			Object_In_Front = true;
 					

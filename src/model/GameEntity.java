@@ -37,6 +37,10 @@ public abstract class GameEntity implements iRenderable{
 		return location.getY();
 	}
 	
+	public void setYLocation(int y) {
+		location = new Point2D(location.getX(), y);
+	}
+	
 	
 	public void setLocation(Point2D newLocation) {
 		location = newLocation;
