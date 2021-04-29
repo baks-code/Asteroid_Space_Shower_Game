@@ -11,6 +11,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import model.GameEntity;
+import model.Level;
 import model.Player;
 import model.Rock;
 
@@ -22,9 +23,7 @@ public class GamePane extends StackPane{
 	private int[] TopFiveScores = {0,0,0,0,0,0};
 	
 	//Game variables
-	private Integer PlayerSpeed = 5;
-
-	private int RockSpeed = 2;
+	
 	
 	
 	enum Game_State
@@ -62,6 +61,7 @@ public class GamePane extends StackPane{
 							   Buffer.getMouseNodeLocation().getY() >= 250 && Buffer.getMouseNodeLocation().getY() <= 300) {
 						
 						state = Game_State.Play;
+						Level.ResetLevel();
 					
 						canvas.entities.addGameEntity(new Player());
 					}
@@ -77,19 +77,19 @@ public class GamePane extends StackPane{
 					
 					if(Buffer.isKeyPressed(KeyCode.UP)){
 						if(player.getYLocation() >= 55)
-							player.setLocation((int)player.getXLocation(), (int)player.getYLocation() - PlayerSpeed);
+							player.setLocation((int)player.getXLocation(), (int)player.getYLocation() - Level.PlayerSpeed);
 					}
 					if(Buffer.isKeyPressed(KeyCode.DOWN)){
 						if(player.getYLocation() <= canvas.getHeight()-60)
-							player.setLocation((int)player.getXLocation(), (int)player.getYLocation() + PlayerSpeed);
+							player.setLocation((int)player.getXLocation(), (int)player.getYLocation() + Level.PlayerSpeed);
 					}
 					if(Buffer.isKeyPressed(KeyCode.LEFT)){
 						if(player.getXLocation() >= 0)
-							player.setLocation((int)player.getXLocation() - PlayerSpeed, (int)player.getYLocation());
+							player.setLocation((int)player.getXLocation() - Level.PlayerSpeed, (int)player.getYLocation());
 					}
 					if(Buffer.isKeyPressed(KeyCode.RIGHT)){
 						if(player.getXLocation() <= canvas.getWidth() - 57)
-							player.setLocation((int)player.getXLocation() + PlayerSpeed, (int)player.getYLocation());
+							player.setLocation((int)player.getXLocation() + Level.PlayerSpeed, (int)player.getYLocation());
 					}					
 					
 					
@@ -109,12 +109,15 @@ public class GamePane extends StackPane{
 						if(!(entity instanceof Player)) {
 							if(player.DetectFrontEntity(entity)) {
 								canvas.entities.removeGameEntity(entity);
+								Level.Score++;
 							}							
 						}
 						
+						//Move Rock Game entity
 						if(entity instanceof Rock)
 						{
-							entity.setYLocation((int)entity.getYLocation() + RockSpeed);
+							entity.setYLocation((int)entity.getYLocation() + Level.RockSpeed);
+							//Remove Entity if bottom reached 
 							if(entity.getYLocation() >= canvas.getHeight() - 50)
 							{
 								canvas.entities.removeGameEntity(entity);
@@ -126,7 +129,7 @@ public class GamePane extends StackPane{
 					
 										
 				
-					
+					if(Level.Timer==0)Level.NextLevel();
 					
 					
 					/* Check clicks and player action */ 

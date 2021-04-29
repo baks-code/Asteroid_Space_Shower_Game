@@ -12,6 +12,7 @@ import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import model.EntityContainer;
 import model.GameEntity;
+import model.Level;
 import model.Rock;
 import ui.GamePane.Game_State;
 import javafx.scene.media.Media;
@@ -27,6 +28,7 @@ public class GameCanvas extends Canvas{
 	//Data
 	EntityContainer<GameEntity> entities = null;
 	private int RockChances = 1;
+	public int counter = 0;
 	
 	
 	
@@ -209,7 +211,7 @@ public class GameCanvas extends Canvas{
 		
 		
 		
-		//Draw Score/Status Section
+		/* Draw GameStatus Section */
 		graphics.setFill(Color.web("rgb(0%,0%,0%)", 0.5));
 		graphics.fillRoundRect(100, -20, 600, 60, 30, 30);
 		graphics.setStroke(Color.WHITE);
@@ -219,14 +221,26 @@ public class GameCanvas extends Canvas{
 		
 		graphics.drawImage(Life, 130, 5, 30,30);
 
+		graphics.setFill(Color.WHITE);
+		graphics.setFont(Font.font("Italics",20));
+		graphics.fillText("Level: " + Level.Level.toString(), 200, 26);
 		
+		
+		graphics.fillText("Score: " + Level.Score.toString(), 380, 26);
+		
+		graphics.fillText("Timer: " + Level.Timer , 570, 26);
+		counter++;
+		if(counter>= 100) {
+			Level.Timer--;
+			counter=0;
+		}
 		
 		
 		//Draw pause button		
 		graphics.drawImage(Pause, 5, 5, 30,30);
 		
 		
-		
+		/* End Of Draw GameStatus Section */
 		
 		
 		
