@@ -4,18 +4,14 @@ import util.Buffer;
 import visitordesignpattern.RenderGameEntityVisitor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
-import javafx.scene.text.*;
 import javafx.scene.text.Font;
 import model.EntityContainer;
 import model.GameEntity;
 import model.Level;
 import model.Rock;
-import ui.GamePane.Game_State;
-import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import java.io.File;
 import java.util.Iterator;
@@ -27,14 +23,12 @@ public class GameCanvas extends Canvas{
 	
 	//Data
 	EntityContainer<GameEntity> entities = null;
-	private int RockChances = 1;
+	
 	public int counter = 0;
-	
-	
 	
 	//Image_Objects
 	final static Image Space = new Image("file:data/Object_Images/space.jpg");
-	public final static Image SpaceShip = new Image("file:data/Object_Images/spaceship.png");
+	public final static Image SpaceShip = new Image("file:data/Object_Images/spaceship1.png");
 	final static Image Pause = new Image("file:data/Object_Images/pause.png");
 	final static Image Escape = new Image("file:data/Object_Images/escape.png");	
 	final static Image Life = new Image("file:data/Object_Images/life.png");
@@ -49,7 +43,6 @@ public class GameCanvas extends Canvas{
 	MediaPlayer MenuSound = new MediaPlayer(sound);
 	
 	
-	
 	private GraphicsContext graphics = null;
 	
 	public GameCanvas() {
@@ -59,7 +52,7 @@ public class GameCanvas extends Canvas{
 	
 	public void setMenuState(int[] TopFiveScores)
 	{
-		/* MenuSound.play(); */
+		MenuSound.play();
 		graphics = getGraphicsContext2D();
 		
 		//Draw space image		
@@ -71,16 +64,7 @@ public class GameCanvas extends Canvas{
 		
 		graphics.drawImage(GameName, 140, 50, 500,150);
 		
-		
-		
 		/* Options */
-		
-		
-		
-		
-		
-		
-		
 		
 		graphics.setFill(Color.web("rgb(0%,0%,0%)", 0.5));
 		graphics.fillRoundRect(200, 250, 400,320, 20, 20);
@@ -97,9 +81,7 @@ public class GameCanvas extends Canvas{
 		graphics.fillText("      Exit",290,530);
 		
 		
-		
-		
-			/* Hover Effect */
+		/* Hover Effect */
 			
 		if(Buffer.getMouseNodeLocation().getX() >= 200 && Buffer.getMouseNodeLocation().getX() <= 600 &&
 				   Buffer.getMouseNodeLocation().getY() >= 250 && Buffer.getMouseNodeLocation().getY() <= 300){
@@ -108,98 +90,18 @@ public class GameCanvas extends Canvas{
 					
 					graphics.setFont(Font.font("Italics",40));
 					graphics.setFill(Color.PAPAYAWHIP);
-					graphics.fillText(" New Game", 288, 305);
-									
+					graphics.fillText(" New Game", 288, 305);									
 				}
 			
 			/* Hover Effect */
 		
-		
-		
-		/* End Of Options */
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		/* Play Button 
-		
-		graphics.setFill(Color.DODGERBLUE);
-		graphics.fillRoundRect(325, 530, 140, 50, 20, 20);
-		graphics.setFill(Color.rgb(0, 102, 204)); graphics.setEffect(new DropShadow());
-		 
-		graphics.setFill(Color.BLACK);
-		graphics.setFont(Font.font("Italics",40));
-		graphics.fillText("PLAY",351,568);
-		graphics.setFill(Color.BLACK);
-		
-		 End Of Play Button */	
-		
-		
-		
-		 
-		/* Score Section 
-		
-		graphics.setStroke(Color.LAWNGREEN);
-		graphics.strokeRoundRect(25, 50, 300, 400, 20, 20);
-		graphics.setFill(Color.web("rgb(0%,0%,0%)", 0.5));
-		graphics.fillRoundRect(0, 0, getWidth(),getHeight(), 20, 20);
-		graphics.setFill(Color.CORNFLOWERBLUE);
-		graphics.fillText("Asteroid Space Shower/n1", 65, 100);		
-		
-		graphics.setFont(Font.font("Italics",20));
-		graphics.setFill(Color.BEIGE);
-		
-		for(int i = 0; i < 5; i++){
-			graphics.fillText(String.valueOf(i+1), 100, 180 + (i * 50));			
-		}
-		
-		graphics.setFont(Font.font("Italics",30));
-		for(int i = 0; i < 5; i++){
-			graphics.fillText(String.valueOf(i+1)+ " " + String.valueOf(TopFiveScores[i]), 120, 180 + (i * 50));			
-		}
-		
-		 End Of Score Section*/	
-		
-		
-		/* Instructions 
-		
-		graphics.strokeRoundRect(350, 50, 422, 400, 20, 20);
-		graphics.setFont(Font.font("Italics",20));
-		
-		graphics.setFill(Color.web("rgb(0%,0%,0%)", 0.5));
-		graphics.fillRoundRect(350, 50, 422, 400, 20, 20);
-		
-		graphics.setFont(Font.font("Italics",40));
-		graphics.setFill(Color.CORNFLOWERBLUE);
-		graphics.fillText("Instruction",465, 100);		
-		
-		graphics.setFont(Font.font("Italics",20));
-		graphics.setFill(Color.BEIGE);
-		graphics.fillText("Shot as many rocks as possible and make \nsure you dont hit any of them because \nyou will lose a life and eventually lose", 380, 150);
-		
-		 End Of Instructions */	
-		
-		
-		
-		
+		/* End Of Options */		
 	}
 
 	public void setPlayState()
 	{
 		graphics = getGraphicsContext2D();
 		visitor.setGraphicsContext(graphics);
-		
-		
 		
 		
 		//Draw space image		
@@ -210,23 +112,30 @@ public class GameCanvas extends Canvas{
 		graphics.fillRect(GenerateRandomPoint(), GenerateRandomPoint(), 2, 2);
 		
 		
-		
 		/* Draw GameStatus Section */
+		
+
+		//Draw pause button		
+		graphics.drawImage(Pause, 5, 5, 30,30);
+		
 		graphics.setFill(Color.web("rgb(0%,0%,0%)", 0.5));
 		graphics.fillRoundRect(100, -20, 600, 60, 30, 30);
 		graphics.setStroke(Color.WHITE);
 		graphics.strokeRoundRect(100, -20, 600, 60, 30, 30);
 		
 		
+		graphics.drawImage(Life, 125, 5, 30,30);
 		
-		graphics.drawImage(Life, 130, 5, 30,30);
-
-		graphics.setFill(Color.WHITE);
 		graphics.setFont(Font.font("Italics",20));
-		graphics.fillText("Level: " + Level.Level.toString(), 200, 26);
+		graphics.setFill(Color.RED);		
+		graphics.fillText(Level.Life.toString(), 125 + 33, 26);
 		
 		
-		graphics.fillText("Score: " + Level.Score.toString(), 380, 26);
+		graphics.setFill(Color.WHITE);		
+		graphics.fillText("Level: " + Level.Level.toString(), 240, 26);
+		
+		
+		graphics.fillText("Score: " + Level.Score.toString(), 410, 26);
 		
 		graphics.fillText("Timer: " + Level.Timer , 570, 26);
 		counter++;
@@ -236,12 +145,7 @@ public class GameCanvas extends Canvas{
 		}
 		
 		
-		//Draw pause button		
-		graphics.drawImage(Pause, 5, 5, 30,30);
-		
-		
 		/* End Of Draw GameStatus Section */
-		
 		
 		
 		/* Draw all entities on canvas */
@@ -254,38 +158,26 @@ public class GameCanvas extends Canvas{
 			
 		}
 		
-		
-		
 		/* Draw all entities on canvas */
 			
 		
-		
 		/* Rock Chances */
 		
-		if(((int)(Math.random() * (100-1 + 1)) + 1) <= RockChances)
+		if(((int)(Math.random() * (100-1 + 1)) + 1) <= Level.RockChances)
 		{
 			entities .addGameEntity(new Rock());
 		}
 		
 		/* End Of Rock Chances */
 		
-		
-			
-		
 		//Play music
-		/* mediaPlayer.play(); */
-		
-		
-		
-		
-		
+		/* MenuSound.play(); */
 	}
 
 	public void setPauseState() {
 		
 		graphics = getGraphicsContext2D();
 		visitor.setGraphicsContext(graphics);
-		
 		
 		
 		//Draw space image		
@@ -343,7 +235,6 @@ public class GameCanvas extends Canvas{
 		
 	}
 	
-
 	/* Support Functions */
 	
 	public static double GenerateRandomPoint() {
@@ -355,9 +246,6 @@ public class GameCanvas extends Canvas{
 	}
 	
 	/* End Of Support Functions */
-	
-	
-	
 	
 	private void setUpEventListeners() {
 		

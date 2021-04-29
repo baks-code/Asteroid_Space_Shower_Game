@@ -1,15 +1,11 @@
 package ui;
 
 import util.Buffer;
-
-import java.time.LocalTime;
 import java.util.Iterator;
 
 import javafx.animation.AnimationTimer;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import model.GameEntity;
 import model.Level;
 import model.Player;
@@ -30,7 +26,8 @@ public class GamePane extends StackPane{
 	{
 		Menu,
 		Play,
-		Pause
+		Pause,
+		GameOver
 	}
 	
 	private Game_State state = Game_State.Menu;
@@ -66,7 +63,6 @@ public class GamePane extends StackPane{
 						canvas.entities.addGameEntity(new Player());
 					}
 					
-					
 				}else if(state.equals(Game_State.Play)){
 					canvas.setPlayState();
 					
@@ -90,15 +86,11 @@ public class GamePane extends StackPane{
 					if(Buffer.isKeyPressed(KeyCode.RIGHT)){
 						if(player.getXLocation() <= canvas.getWidth() - 57)
 							player.setLocation((int)player.getXLocation() + Level.PlayerSpeed, (int)player.getYLocation());
-					}					
-					
-					
-					
+					}			
 					
 					/* End Of Player Mobility */
 					
 			
-					
 					/* Move Game Entities */
 					
 					Iterator<GameEntity> temp_itr = canvas.entities.iterator();
@@ -110,6 +102,7 @@ public class GamePane extends StackPane{
 							if(player.DetectFrontEntity(entity)) {
 								canvas.entities.removeGameEntity(entity);
 								Level.Score++;
+								Level.Life--;
 							}							
 						}
 						
@@ -127,12 +120,17 @@ public class GamePane extends StackPane{
 					
 					/* End Of Move Game Entities */
 					
-										
-				
+								
 					if(Level.Timer==0)Level.NextLevel();
+					
+					if(Level.Life == 0) {
+						canvas.entities.clearGameEntity();
+						state = Game_State.Menu;
+					}
 					
 					
 					/* Check clicks and player action */ 
+					
 						//Play button is clicked
 						if(Buffer.isLeftMousePressed() &&
 						   Buffer.getMouseNodeLocation().getX() >= 5 && Buffer.getMouseNodeLocation().getX() <= 35 &&
@@ -160,7 +158,6 @@ public class GamePane extends StackPane{
 					if(Buffer.isKeyPressed(KeyCode.ESCAPE)) state = Game_State.Play;
 					
 				}
-				
 				
 				System.out.println("Up arrow is pressed: " + Buffer.isKeyPressed(KeyCode.UP));		 	
 				System.out.println("Mouse is in window: " + Buffer.isMouseInWindow());   

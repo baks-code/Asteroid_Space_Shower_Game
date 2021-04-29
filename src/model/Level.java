@@ -11,7 +11,11 @@ public class Level{
 
 	public static Integer RockSpeed;
 	
-	public static Integer Timer; 
+	public static Integer Timer;
+	
+	public static Integer Life;
+	
+	public static Integer RockChances;
 	
 	
 	public static void ResetLevel() {
@@ -20,6 +24,8 @@ public class Level{
 		PlayerSpeed = 5;
 		RockSpeed = 1;
 		Timer = 60;
+		Life = 5;
+		RockChances = 1;
 	}
 	
 	public static void NextLevel() {

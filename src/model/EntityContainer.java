@@ -27,7 +27,6 @@ public class EntityContainer<T extends GameEntity> implements Iterable<T>{
 	}
 	
 	public void clearGameEntity() {
-		//Entities.removeAll(null);
 		Entities.clear();
 	}
 	
