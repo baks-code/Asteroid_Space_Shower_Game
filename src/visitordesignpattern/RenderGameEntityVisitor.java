@@ -25,14 +25,19 @@ public class RenderGameEntityVisitor implements iRenderVisitor{
 	}
 
 	@Override
-	public void DrawPlayer(Point2D ObjLocation) {
-		graphics.drawImage(GameCanvas.SpaceShip, ObjLocation.getX(), ObjLocation.getY(), 60,50);
+	public void DrawPlayer(Point2D entityLocation) {
+		graphics.drawImage(GameCanvas.SpaceShip, entityLocation.getX(), entityLocation.getY(), 60,50);
 	}
 
 	@Override
-	public void DrawRock(Point2D ObjLocation) {
-		graphics.drawImage(GameCanvas.Rock, ObjLocation.getX(), ObjLocation.getY(), 60,50);
+	public void DrawRock(Point2D entityLocation) {
+		graphics.drawImage(GameCanvas.Rock, entityLocation.getX(), entityLocation.getY(), 60,50);
 		
+	}
+
+	@Override
+	public void DrawMissile(Point2D entityLocation) {
+		graphics.drawImage(GameCanvas.Missile, entityLocation.getX(), entityLocation.getY(),20,20);		
 	}
 	
 	

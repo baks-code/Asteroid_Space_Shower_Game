@@ -1,6 +1,8 @@
 package ui;
 
 import util.Buffer;
+
+import java.util.ArrayList;
 import java.util.Iterator;
 
 import javafx.animation.AnimationTimer;
@@ -8,6 +10,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.StackPane;
 import model.GameEntity;
 import model.Level;
+import model.Missile;
 import model.Player;
 import model.Rock;
 
@@ -86,7 +89,18 @@ public class GamePane extends StackPane{
 					if(Buffer.isKeyPressed(KeyCode.RIGHT)){
 						if(player.getXLocation() <= canvas.getWidth() - 57)
 							player.setLocation((int)player.getXLocation() + Level.PlayerSpeed, (int)player.getYLocation());
-					}			
+					}
+					
+					if(Buffer.isKeyPressed(KeyCode.S) && Level.MissileBuffer == 0) {
+						
+						canvas.entities.addGameEntity(new Missile((int)player.getXLocation(), (int)player.getYLocation()));
+						//canvas.entities.addGameEntity(new Missile(100, 100));
+						Level.MissileBuffer = Level.MissileTimer;
+						
+					}
+					
+					if(Level.MissileBuffer!= 0)Level.MissileBuffer--;
+					System.out.println(Level.MissileBuffer);
 					
 					/* End Of Player Mobility */
 					
@@ -94,13 +108,15 @@ public class GamePane extends StackPane{
 					/* Move Game Entities */
 					
 					Iterator<GameEntity> temp_itr = canvas.entities.iterator();
+					ArrayList<GameEntity> entitiesToremove = new ArrayList<GameEntity>();
 					while(temp_itr.hasNext()){
 						GameEntity entity = temp_itr.next();
 						
 						//Detect Player collision
-						if(!(entity instanceof Player)) {
+						if(!(entity instanceof Player) && !(entity instanceof Missile)) {
 							if(player.DetectFrontEntity(entity)) {
-								canvas.entities.removeGameEntity(entity);
+								//canvas.entities.removeGameEntity(entity);
+								entitiesToremove.add(entity);
 								Level.Score++;
 								Level.Life--;
 							}							
@@ -113,10 +129,40 @@ public class GamePane extends StackPane{
 							//Remove Entity if bottom reached 
 							if(entity.getYLocation() >= canvas.getHeight() - 50)
 							{
-								canvas.entities.removeGameEntity(entity);
+								//canvas.entities.removeGameEntity(entity);
+								entitiesToremove.add(entity);
 							}
-						}				
+						}
+						
+						
+						if(entity instanceof Missile){
+							entity.setYLocation((int)entity.getYLocation() - Level.MissileSpeed);
+							
+							Iterator<GameEntity> temp = canvas.entities.iterator();
+							while(temp.hasNext())
+							{
+								GameEntity temp_entity = temp.next();
+								if(temp_entity instanceof Rock){
+									if(((Missile) entity).DetectFrontEntity(temp_entity)) {
+										entitiesToremove.add(temp_entity);
+										entitiesToremove.add(entity);
+										
+										Level.Score += Level.Level + 1;
+									}
+								}
+							}
+								
+							
+							
+						}
+						
 					}
+					
+					for(GameEntity etr : entitiesToremove) {
+						canvas.entities.removeGameEntity(etr);
+					}
+					
+					entitiesToremove = null;
 					
 					/* End Of Move Game Entities */
 					
@@ -159,10 +205,10 @@ public class GamePane extends StackPane{
 					
 				}
 				
-				System.out.println("Up arrow is pressed: " + Buffer.isKeyPressed(KeyCode.UP));		 	
-				System.out.println("Mouse is in window: " + Buffer.isMouseInWindow());   
-				System.out.println("Mouse location relative to canvas: (" + Buffer.getMouseNodeLocation().getX() + "," + Buffer.getMouseNodeLocation().getY() + ")");
-				System.out.println("Left mouse pressed: " + Buffer.isLeftMousePressed());				 
+				//System.out.println("Up arrow is pressed: " + Buffer.isKeyPressed(KeyCode.UP));		 	
+				//System.out.println("Mouse is in window: " + Buffer.isMouseInWindow());   
+				//System.out.println("Mouse location relative to canvas: (" + Buffer.getMouseNodeLocation().getX() + "," + Buffer.getMouseNodeLocation().getY() + ")");
+				//System.out.println("Left mouse pressed: " + Buffer.isLeftMousePressed());				 
 			}
 		};
 		

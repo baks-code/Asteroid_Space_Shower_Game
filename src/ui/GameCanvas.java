@@ -33,6 +33,7 @@ public class GameCanvas extends Canvas{
 	final static Image Escape = new Image("file:data/Object_Images/escape.png");	
 	final static Image Life = new Image("file:data/Object_Images/life.png");
 	public final static Image Rock = new Image("file:data/Object_Images/rock.png");
+	public final static Image Missile = new Image("file:data/Object_Images/missile.png");
 	
 	final static Image GameName = new Image("file:data/Object_Images/name2.png");
 	
@@ -52,7 +53,7 @@ public class GameCanvas extends Canvas{
 	
 	public void setMenuState(int[] TopFiveScores)
 	{
-		MenuSound.play();
+		//MenuSound.play();
 		graphics = getGraphicsContext2D();
 		
 		//Draw space image		
@@ -76,7 +77,7 @@ public class GameCanvas extends Canvas{
 		
 		graphics.fillText(" Instruction",290,390);
 		
-		graphics.fillText("Score Board",290,460);
+		graphics.fillText("Highest Scores",263,460);
 		
 		graphics.fillText("      Exit",290,530);
 		

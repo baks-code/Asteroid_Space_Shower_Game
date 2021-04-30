@@ -2,11 +2,10 @@ package model;
 
 import visitordesignpattern.iRenderVisitor;
 
-public class Player extends GameEntity {
+public class Missile extends GameEntity {
 
-	public Player()
-	{
-		super(380,600);
+	public Missile(int x, int y) {
+		super(x + 20, y - 18);
 	}
 	
 	public boolean DetectFrontEntity(GameEntity entity)
@@ -14,19 +13,19 @@ public class Player extends GameEntity {
 		boolean Contact = false;
 		
 		if((int)entity.getYLocation() >= (int)getYLocation() - 30 &&
-		   (int)entity.getYLocation() <= (int)getYLocation() + 30 &&
-		   (int)entity.getXLocation() >=  (int)getXLocation() - 30 &&
-		   (int)entity.getXLocation() <=  (int)getXLocation() + 30)
+		   (int)entity.getYLocation() <= (int)getYLocation()&&
+		   (int)entity.getXLocation() >=  (int)getXLocation() - 43 &&
+		   (int)entity.getXLocation() <=  (int)getXLocation())
 		{
 			Contact = true;
 					
 		}
 		return Contact;
 	}
-	
+
 	@Override
 	public void accept(iRenderVisitor visitor) {
-		visitor.DrawPlayer(getLocation());
+		visitor.DrawMissile(getLocation());	
 	}
 
 }

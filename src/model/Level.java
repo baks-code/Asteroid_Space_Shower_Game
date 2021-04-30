@@ -11,11 +11,17 @@ public class Level{
 
 	public static Integer RockSpeed;
 	
+	public static Integer MissileSpeed;
+	
+	public static Integer MissileBuffer;
+	
 	public static Integer Timer;
 	
 	public static Integer Life;
 	
 	public static Integer RockChances;
+	
+	public static final Integer MissileTimer = 10;
 	
 	
 	public static void ResetLevel() {
@@ -26,6 +32,8 @@ public class Level{
 		Timer = 60;
 		Life = 5;
 		RockChances = 1;
+		MissileSpeed = 6;
+		MissileBuffer = 0;
 	}
 	
 	public static void NextLevel() {
