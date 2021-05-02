@@ -22,6 +22,7 @@ public class Main extends Application{
 		primaryStage.setTitle("Asteroid Space Shower");
 		primaryStage.setScene(scene);
 		primaryStage.show();
+		
 	}
 
 }

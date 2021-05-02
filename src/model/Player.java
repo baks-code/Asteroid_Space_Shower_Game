@@ -13,6 +13,9 @@ public class Player extends GameEntity {
 	{
 		boolean Contact = false;
 		
+		if(Resources.ShieldActive)
+			return false;
+		
 		if((int)entity.getYLocation() >= (int)getYLocation() - 30 &&
 		   (int)entity.getYLocation() <= (int)getYLocation() + 30 &&
 		   (int)entity.getXLocation() >=  (int)getXLocation() - 30 &&

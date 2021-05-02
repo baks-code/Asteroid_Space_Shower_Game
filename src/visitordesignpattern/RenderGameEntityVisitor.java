@@ -2,7 +2,8 @@ package visitordesignpattern;
 
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.GraphicsContext;
-import ui.GameCanvas;
+import javafx.scene.paint.Color;
+import model.Resources;
 
 /**
  * ConcreteVisitor class
@@ -26,23 +27,23 @@ public class RenderGameEntityVisitor implements iRenderVisitor{
 
 	@Override
 	public void DrawPlayer(Point2D entityLocation) {
-		graphics.drawImage(GameCanvas.SpaceShip, entityLocation.getX(), entityLocation.getY(), 60,50);
+		
+		graphics.drawImage(Resources.SpaceShipImage , entityLocation.getX(), entityLocation.getY(), 60,50);
+		
+		if(Resources.ShieldActive) {			
+			graphics.setFill(Color.web("rgb(10%,10%,80%)", 0.5));
+			graphics.fillOval(entityLocation.getX() - 2, entityLocation.getY() - 10, 65, 80);
+		}
 	}
 
 	@Override
 	public void DrawRock(Point2D entityLocation) {
-		graphics.drawImage(GameCanvas.Rock, entityLocation.getX(), entityLocation.getY(), 60,50);
-		
+		graphics.drawImage(Resources.RockImage, entityLocation.getX(), entityLocation.getY(), 60,50);
 	}
 
 	@Override
 	public void DrawMissile(Point2D entityLocation) {
-		graphics.drawImage(GameCanvas.Missile, entityLocation.getX(), entityLocation.getY(),20,20);		
+		graphics.drawImage(Resources.MissileImage, entityLocation.getX(), entityLocation.getY(),20,20);		
 	}
-	
-	
-	
-	
-	
 
 }
