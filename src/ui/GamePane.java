@@ -116,6 +116,22 @@ public class GamePane extends StackPane{
 						 }
 					 }
 					 
+					 if(Buffer.isKeyPressed(KeyCode.A) && !Resources.SlowMotionActive && Resources.SlowMotion > 0) {
+						Resources.SlowMotionActive = true;
+						Resources.SlowMotion--;
+						Resources.RockSpeed = 1;
+					 }
+					 
+					 if(Resources.SlowMotionActive && Resources.SlowMotionCounter <= Resources.SlowMotionTimer) {
+						 Resources.SlowMotionCounter++;
+						 if(Resources.SlowMotionCounter >= Resources.SlowMotionTimer){
+							 Resources.SlowMotionActive = false;
+							 Resources.SlowMotionCounter = 0;
+							 Resources.RockSpeed = Resources.Level;
+						 }
+					 }
+						
+					 
 					
 					
 					/* End Of Player Mobility */
@@ -179,7 +195,7 @@ public class GamePane extends StackPane{
 					/* End Of Move Game Entities */
 					
 								
-					if(Resources.LevelTimer == 0)Resources.NextLevel();
+					if(Resources.Time == 0)Resources.NextLevel();
 					
 					if(Resources.Life == 0) {
 						canvas.entities.clearGameEntity();
@@ -199,6 +215,11 @@ public class GamePane extends StackPane{
 					
 					/* End Of Check clicks and player action */ 
 					
+						Resources.LevelCounter++;
+						if(Resources.LevelCounter >= 100) {
+							Resources.Time--;
+							Resources.LevelCounter = 0;
+						}
 					
 				}else if(state.equals(Game_State.Pause)){
 					canvas.setPauseState();
@@ -216,6 +237,13 @@ public class GamePane extends StackPane{
 					if(Buffer.isKeyPressed(KeyCode.ESCAPE)) state = Game_State.Play;
 					
 				}
+				
+				
+				
+				
+
+				
+				
 				
 				//System.out.println("Up arrow is pressed: " + Buffer.isKeyPressed(KeyCode.UP));		 	
 				//System.out.println("Mouse is in window: " + Buffer.isMouseInWindow());   

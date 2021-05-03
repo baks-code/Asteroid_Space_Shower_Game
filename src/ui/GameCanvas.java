@@ -124,18 +124,14 @@ public class GameCanvas extends Canvas{
 		graphics.setFill(Color.WHITE);		
 		graphics.fillText("Level: " + Resources.Level.toString(), 230, 15);
 		
-		graphics.fillText("Timer: " + Resources.LevelTimer , 230, 34);
+		graphics.fillText("Timer: " + Resources.Time , 230, 34);
 		
 		graphics.fillText("Score: " + Resources.Score.toString(), 410, 26);
 		
 		graphics.fillText("Shield: " + Resources.Shield, 500, 26);
 		
+		graphics.fillText("Slow: " + Resources.SlowMotion, 570, 26);
 		
-		counter++;
-		if(counter>= 100) {
-			Resources.LevelTimer--;
-			counter=0;
-		}
 		
 		
 		/* End Of Draw GameStatus Section */

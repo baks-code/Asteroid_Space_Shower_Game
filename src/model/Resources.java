@@ -29,7 +29,7 @@ public class Resources {
 	
 	public static Integer MissileBuffer;
 	
-	public static Integer LevelTimer;
+	public static final Integer LevelTimer = 10;
 	
 	public static Integer Life;
 	
@@ -39,33 +39,49 @@ public class Resources {
 	
 	public static final Integer ShieldTimer = 400;
 	
+	public static Integer Time;
+	
+	public static final Integer SlowMotionTimer = 400;
+	
 	public static Integer ShieldCounter;
+	
+	public static Integer SlowMotionCounter;
+	
+	public static Integer LevelCounter;
 	
 	public static Integer Shield;
 	
 	public static Boolean ShieldActive;
+	
+	public static Boolean SlowMotionActive;
+	
+	public static Integer SlowMotion;
 	
 	
 	public static void ResetLevel() {
 		Level = 1;
 		Score = 0;
 		PlayerSpeed = 5;
-		RockSpeed = 1;
-		LevelTimer = 60;
+		RockSpeed = Level;
+		LevelCounter = 0;
 		Life = 5;
-		RockChances = 1;
+		RockChances = 2;
 		MissileSpeed = 6;
 		MissileBuffer = 0;
 		Shield = 3;
 		ShieldActive = false;
+		SlowMotionActive = false;
 		ShieldCounter = 0;
+		SlowMotionCounter = 0;
+		SlowMotion = 3;
+		Time = LevelTimer;
 	}
 	
 	public static void NextLevel() {
 		Level++;
 		PlayerSpeed = 5;
-		RockSpeed++;;
-		LevelTimer = 60;
+		RockSpeed = Level;
+		Time = LevelTimer;
 	}
 
 }
