@@ -211,7 +211,6 @@ public class GameCanvas extends Canvas{
 		
 		
 		
-		
 		//Hover Effect
 		
 		if(Buffer.getMouseNodeLocation().getX() >= 200 && Buffer.getMouseNodeLocation().getX() <= 600 &&
@@ -223,8 +222,6 @@ public class GameCanvas extends Canvas{
 					graphics.fillText("New Game", 310, 155);
 									
 				}
-		
-		
 		
 		
 		/* End Of Paused Menu Section */
